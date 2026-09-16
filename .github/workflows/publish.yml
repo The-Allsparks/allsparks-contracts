@@ -5,20 +5,20 @@ name: Publish
 # so SNAPSHOT spam is avoided. Third-party actions are pinned to full
 # commit SHAs (same pins as ci.yml). This is experimental, not 1.0.
 
-permissions:
-  contents: read
-  packages: write
-
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: Optional Maven version override (default: 0.1.0-SNAPSHOT from build.gradle)
+        description: "Optional Maven version override. Defaults to 0.1.0-SNAPSHOT."
         required: false
         type: string
   push:
     tags:
       - "v*"
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   publish:
