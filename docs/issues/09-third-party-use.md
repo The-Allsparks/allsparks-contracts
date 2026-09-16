@@ -18,8 +18,8 @@ Support for Android-specific packaging. Shipping season game-piece types.
 
 ## Acceptance criteria
 
-- [ ] Guide linked from README
-- [ ] Example still compiles with only this JAR
+- [x] Guide linked from README
+- [x] Example still compiles with only this JAR
 
 ## Hardware validation required
 

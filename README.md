@@ -16,7 +16,7 @@ A tiny JAR of immutable value types and one clock SPI:
 - `Availability` / `Readiness` / `Reason`
 - `HealthSeverity` / `HealthFinding`
 
-Maven coordinates: `org.allsparks:allsparks-contracts`.
+Maven coordinates: `org.allsparks:allsparks-contracts`. Visiting teams that want this JAR without TRACE or HELM: [Third-party use](docs/third-party.md).
 
 ## What this is not
 
@@ -83,6 +83,7 @@ Java 11 source and target. CI uses Temurin 17. There are no production dependenc
 - [Cross-project audit](docs/audits/cross-project-contract-audit.md)
 - [Compatibility](docs/compatibility.md)
 - [Adoption](docs/adoption.md)
+- [Third-party use](docs/third-party.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
 
