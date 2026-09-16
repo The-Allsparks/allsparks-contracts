@@ -1,6 +1,8 @@
 plugins {
     id 'java-library'
     id 'com.diffplug.spotless' version '8.10.2'
+    // japicmp is a build/test plugin only. It must never become a production dependency.
+    id 'me.champeau.gradle.japicmp' version '0.4.6'
 }
 
 group = 'org.allsparks'
@@ -86,9 +88,106 @@ def assertNoProductionDependencies = tasks.register('assertNoProductionDependenc
     }
 }
 
+def apiBaselineJar = layout.projectDirectory.file('api/baseline/allsparks-contracts.jar')
+def jarTask = tasks.named('jar', Jar)
+
+def japicmpReportXml = layout.buildDirectory.file('reports/japicmp/japicmp.xml')
+
+// Compare the current jar to the committed public API. The plugin's
+// failOnModification only calls hasBreakingChange (binary/source flags).
+// japicmp marks a new enum constant as a compatible NEW field with an empty
+// compatibilityChanges list, so those flags never trip. japicmpGate reads the
+// XML and fails on any public API modification. Do not add
+// compatibilityChangeExcludes for ENUM_FIELD_ADDED or new fields.
+def japicmpTask = tasks.register('japicmp', me.champeau.gradle.japicmp.JapicmpTask) {
+    group = 'verification'
+    description = 'Compare the current jar to api/baseline/allsparks-contracts.jar.'
+    dependsOn jarTask
+    oldClasspath.from(apiBaselineJar)
+    newClasspath.from(jarTask.flatMap { it.archiveFile })
+    packageIncludes = ['org.allsparks.contracts*']
+    accessModifier = 'public'
+    onlyModified = true
+    onlyBinaryIncompatibleModified = false
+    failOnModification = true
+    failOnSourceIncompatibility = true
+    ignoreMissingClasses = true
+    htmlOutputFile = layout.buildDirectory.file('reports/japicmp/japicmp.html')
+    txtOutputFile = layout.buildDirectory.file('reports/japicmp/japicmp.txt')
+    xmlOutputFile = japicmpReportXml
+    doFirst {
+        def baseline = apiBaselineJar.asFile
+        if (!baseline.isFile()) {
+            throw new GradleException(
+                    'Missing API baseline JAR at '
+                    + baseline
+                    + '. See docs/compatibility.md.')
+        }
+    }
+}
+
+japicmpTask.configure {
+    outputs.cacheIf { false }
+}
+
+def japicmpGateTask = tasks.register('japicmpGate') {
+    group = 'verification'
+    description = 'Fail when japicmp reports any public API modification, including new enum constants.'
+    dependsOn japicmpTask
+    inputs.file(japicmpReportXml)
+    doLast {
+        def xmlFile = japicmpReportXml.get().asFile
+        if (!xmlFile.isFile()) {
+            throw new GradleException('japicmp did not write ' + xmlFile)
+        }
+        def xml = new groovy.xml.XmlParser().parse(xmlFile)
+        def changed = xml.classes.'class'.findAll { node ->
+            node.@changeStatus.toString() != 'UNCHANGED'
+        }
+        if (changed.isEmpty()) {
+            return
+        }
+        def lines = changed.collect { cls ->
+            def name = cls.@fullyQualifiedName.toString()
+            def status = cls.@changeStatus.toString()
+            def newFields = cls.fields.field.findAll { field ->
+                field.@changeStatus.toString() == 'NEW'
+            }.collect { field -> field.@name.toString() }
+            def enumType = cls.classType.any { typeNode ->
+                typeNode.@newType.toString() == 'ENUM'
+            }
+            def prefix = (enumType && !newFields.isEmpty()) ? 'ENUM_CONSTANT_ADDED ' : ''
+            def suffix = newFields.isEmpty() ? '' : (' newFields=' + newFields.join(', '))
+            prefix + name + ' ' + status + suffix
+        }
+        throw new GradleException(
+                'Public API changed relative to api/baseline/allsparks-contracts.jar.\n  '
+                + lines.join('\n  ')
+                + '\nAdding an enum constant is a compatibility event. See docs/compatibility.md '
+                + 'and run updateApiBaseline only after documenting the migration.')
+    }
+}
+
+tasks.register('updateApiBaseline') {
+    group = 'build'
+    description = 'Replace the committed API baseline JAR after an accepted, documented API change.'
+    dependsOn jarTask
+    inputs.file(jarTask.flatMap { it.archiveFile })
+    outputs.file(apiBaselineJar)
+    doLast {
+        def dest = apiBaselineJar.asFile
+        dest.parentFile.mkdirs()
+        java.nio.file.Files.copy(
+                jarTask.get().archiveFile.get().asFile.toPath(),
+                dest.toPath(),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+    }
+}
+
 tasks.named('check') {
     dependsOn 'compileJava11ConsumerFixture'
     dependsOn 'javadoc'
     dependsOn 'assertNoProductionDependencies'
     dependsOn 'spotlessCheck'
+    dependsOn japicmpGateTask
 }

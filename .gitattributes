@@ -3,3 +3,6 @@
 
 *.sh text eol=lf
 gradlew text eol=lf
+
+# Committed JARs are binaries; do not apply LF conversion.
+*.jar binary

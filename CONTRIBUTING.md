@@ -16,9 +16,10 @@ Coding agents: read [AGENTS.md](AGENTS.md) and [docs/architecture/ADR-0001-contr
 
 | Command | What it prevents |
 |---------|------------------|
-| `.\gradlew.bat check` | Broken tests, architecture regressions, consumer-fixture compile failures, format drift |
+| `.\gradlew.bat check` | Broken tests, architecture regressions, consumer-fixture compile failures, format drift, unexpected public API changes vs `api/baseline/allsparks-contracts.jar` |
 | `.\gradlew.bat spotlessApply` | Java format drift (Palantir Java Format) |
 | `.\gradlew.bat javadoc` | Missing or invalid Javadoc |
+| `.\gradlew.bat updateApiBaseline` | (Maintainer) stale baseline after an accepted, documented API change |
 
 ## Rules of engagement
 

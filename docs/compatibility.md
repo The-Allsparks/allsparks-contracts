@@ -36,9 +36,31 @@ Adapters own leftover constants:
 | TRACE `ERROR` | `HealthSeverity.DEGRADED` |
 | TRACE `FAULT` | `HealthSeverity.STOP_COMPONENT` unless documented otherwise |
 
-## Consumer fixtures
+## API compatibility check
 
-`src/consumer-fixture/java` compiles against the published JAR shape (the `jar` task output) with Java 11 and no other Allsparks libraries. That suite is the compatibility canary until japicmp or equivalent lands.
+`./gradlew check` runs japicmp (build/test plugin only; not a production dependency) against the committed baseline JAR:
+
+```text
+api/baseline/allsparks-contracts.jar
+```
+
+Each build's `jar` output is compared to that file. japicmp's own binary/source flags treat a new enum constant as a compatible `NEW` field (`compatibilityChanges` is empty), so `failOnSourceIncompatibility` would miss it. `japicmpGate` therefore fails `check` on **any** public API modification in the japicmp XML, and labels `ENUM_CONSTANT_ADDED` when the new member is an enum field. Adding `Validity.FOO`, `Availability.FOO`, `Readiness.State.FOO`, or `HealthSeverity.FOO` fails CI until maintainers accept the change and refresh the baseline. Do not add those changes to `compatibilityChangeExcludes`.
+
+Reports land in `build/reports/japicmp/`.
+
+The Java 11 consumer fixture in `src/consumer-fixture/java` remains a compile-against-the-jar canary. It does not replace japicmp.
+
+### Refreshing the baseline
+
+After an intentional, accepted API change (with a CHANGELOG entry and a migration note):
+
+```text
+./gradlew updateApiBaseline
+```
+
+On Windows: `.\gradlew.bat updateApiBaseline`. Commit `api/baseline/allsparks-contracts.jar` in the same PR as the API change. Do not refresh the baseline to silence an accidental break.
+
+To prove enum-constant detection locally without keeping an API change, add a throwaway constant, run `./gradlew japicmpGate` (it must fail with `ENUM_CONSTANT_ADDED`), then revert the source. Do not commit that constant, and do not run `updateApiBaseline` for it.
 
 ## Publication
 
