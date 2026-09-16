@@ -57,5 +57,6 @@ jobs:
           test -f docs/audits/cross-project-contract-audit.md
           test -f docs/compatibility.md
           test -f docs/adoption.md
+          test -f docs/third-party.md
           test -f api/baseline/allsparks-contracts.jar
           test -f api/baseline/README.md
