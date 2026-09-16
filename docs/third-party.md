@@ -8,7 +8,9 @@ Installing it does nothing by itself. It does not command motors, servos, or oth
 
 Maven coordinates: `org.allsparks:allsparks-contracts`.
 
-The current version is `0.1.0-SNAPSHOT`. Maven Central / GitHub Packages is not enabled yet. Until publication lands, consume a sibling checkout with Gradle composite `includeBuild`. Do not treat SNAPSHOT coordinates as a released API.
+Published experimental versions (not 1.0) live on GitHub Packages. Maven Central is not enabled. Local development still uses `0.1.0-SNAPSHOT`. Do not treat SNAPSHOT coordinates as a released API.
+
+**Zero-auth student path:** Gradle composite `includeBuild` against a sibling checkout. No Maven login is required, and this remains the recommended classroom path until Maven Central exists.
 
 In the consumer `settings.gradle` (or `settings.gradle.kts`):
 
@@ -24,7 +26,27 @@ dependencies {
 }
 ```
 
-`includeBuild` substitutes those coordinates from the checkout. No Maven login is required. Publication is tracked separately; this guide does not enable it.
+`includeBuild` substitutes those coordinates from the checkout.
+
+**GitHub Packages:** GitHub requires authentication even for public packages. Add the repository and a `read:packages` PAT (see [Compatibility](compatibility.md) for the full snippet):
+
+```text
+repositories {
+    maven {
+        url = uri('https://maven.pkg.github.com/The-Allsparks/allsparks-contracts')
+        credentials {
+            username = System.getenv('GPR_USERNAME') ?: System.getenv('GITHUB_ACTOR')
+            password = System.getenv('GPR_TOKEN') ?: System.getenv('GITHUB_TOKEN')
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.allsparks:allsparks-contracts:0.1.0-rc.1'
+}
+```
+
+Maintainers publish with tag `v0.1.0-rc.1` or Actions `workflow_dispatch`. Students should keep using `includeBuild` unless they already have GitHub Packages credentials.
 
 ## Requirements
 
@@ -71,5 +93,5 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for local `./gradlew check` and [SECUR
 
 - Android AAR packaging
 - Season game-piece types
-- Maven Central publication (not enabled in this repository yet)
+- Maven Central publication (GitHub Packages is the current remote; Central is not enabled)
 - A scheduler, event bus, logger, or hardware abstraction

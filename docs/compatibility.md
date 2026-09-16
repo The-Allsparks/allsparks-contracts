@@ -64,4 +64,42 @@ To prove enum-constant detection locally without keeping an API change, add a th
 
 ## Publication
 
-Maven Central / GitHub Packages is not enabled in this repository yet. Do not treat SNAPSHOT coordinates as a released API.
+GitHub Packages is the documented remote repository. Maven Central is not enabled. The project remains experimental; a published `0.1.0-rc.1` is not a 1.0 stability claim. Do not treat SNAPSHOT coordinates as a released API.
+
+### How maintainers publish
+
+Publish is **not** run on every `main` push. Use a version tag or a manual Actions run:
+
+```text
+git tag v0.1.0-rc.1
+git push origin v0.1.0-rc.1
+```
+
+The [Publish](../.github/workflows/publish.yml) workflow also accepts `workflow_dispatch`. A `v*` tag publishes that version (the leading `v` is stripped, so `v0.1.0-rc.1` becomes `0.1.0-rc.1`). Dispatch without a version override publishes `0.1.0-SNAPSHOT`.
+
+Requires `packages: write` on this repository. The workflow uses the default `GITHUB_TOKEN`. Do not commit tokens.
+
+### How consumers resolve GitHub Packages
+
+GitHub Packages requires authentication even for public packages. In the consumer `build.gradle`:
+
+```text
+repositories {
+    mavenCentral()
+    maven {
+        url = uri('https://maven.pkg.github.com/The-Allsparks/allsparks-contracts')
+        credentials {
+            username = System.getenv('GPR_USERNAME') ?: System.getenv('GITHUB_ACTOR')
+            password = System.getenv('GPR_TOKEN') ?: System.getenv('GITHUB_TOKEN')
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.allsparks:allsparks-contracts:0.1.0-rc.1'
+}
+```
+
+Create a GitHub PAT with `read:packages` (and SSO-authorize it for The-Allsparks if the org requires that). Set `GPR_USERNAME` to your GitHub username and `GPR_TOKEN` to the PAT. `GITHUB_ACTOR` / `GITHUB_TOKEN` work in GitHub Actions.
+
+Gradle `includeBuild('../allsparks-contracts')` remains the zero-auth student path until Maven Central exists. See [Third-party use](third-party.md).

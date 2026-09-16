@@ -18,9 +18,9 @@ Publishing a 1.0 stability claim. Changing the public API.
 
 ## Acceptance criteria
 
-- [ ] A documented non-SNAPSHOT or snapshot repository consumers can resolve
-- [ ] Sources and Javadoc JARs publish with the main JAR
-- [ ] No FTC or Android artifacts are attached
+- [x] A documented non-SNAPSHOT or snapshot repository consumers can resolve
+- [x] Sources and Javadoc JARs publish with the main JAR
+- [x] No FTC or Android artifacts are attached
 
 ## Hardware validation required
 
