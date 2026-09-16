@@ -1,0 +1,94 @@
+plugins {
+    id 'java-library'
+    id 'com.diffplug.spotless' version '8.10.2'
+}
+
+group = 'org.allsparks'
+version = '0.1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+spotless {
+    java {
+        palantirJavaFormat()
+        target 'src/**/*.java'
+    }
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    testLogging {
+        events 'failed'
+        exceptionFormat 'full'
+    }
+}
+
+tasks.named('jar', Jar) {
+    manifest {
+        attributes(
+                'Implementation-Title': 'allsparks-contracts',
+                'Implementation-Version': archiveVersion,
+                'Automatic-Module-Name': 'org.allsparks.contracts')
+    }
+}
+
+tasks.named('compileJava', JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:unchecked', '-Xlint:deprecation']
+}
+
+tasks.named('compileTestJava', JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:unchecked', '-Xlint:deprecation']
+}
+
+tasks.named('javadoc', Javadoc) {
+    options.encoding = 'UTF-8'
+    options.addStringOption('Xdoclint:none', '-quiet')
+    failOnError = true
+}
+
+def consumerFixtureCompile = tasks.register('compileJava11ConsumerFixture', JavaCompile) {
+    dependsOn tasks.named('jar')
+    source = fileTree('src/consumer-fixture/java')
+    classpath = files(tasks.named('jar').flatMap { it.archiveFile })
+    destinationDirectory = layout.buildDirectory.dir('consumer-fixture')
+    options.encoding = 'UTF-8'
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
+def assertNoProductionDependencies = tasks.register('assertNoProductionDependencies') {
+    doLast {
+        def runtime = configurations.runtimeClasspath.files
+        if (!runtime.isEmpty()) {
+            throw new GradleException('Production runtime dependencies are not allowed: ' + runtime)
+        }
+        def compile = configurations.compileClasspath.files
+        if (!compile.isEmpty()) {
+            throw new GradleException('Production compile dependencies are not allowed: ' + compile)
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn 'compileJava11ConsumerFixture'
+    dependsOn 'javadoc'
+    dependsOn 'assertNoProductionDependencies'
+    dependsOn 'spotlessCheck'
+}
