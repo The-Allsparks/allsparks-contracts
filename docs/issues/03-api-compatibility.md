@@ -18,9 +18,9 @@ Widening the contract boundary.
 
 ## Acceptance criteria
 
-- [ ] CI compares the public API to the last published baseline
-- [ ] Adding an enum constant is flagged as a compatibility event
-- [ ] Documented in docs/compatibility.md
+- [x] CI compares the public API to the last published baseline
+- [x] Adding an enum constant is flagged as a compatibility event
+- [x] Documented in docs/compatibility.md
 
 ## Hardware validation required
 

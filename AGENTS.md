@@ -10,9 +10,12 @@ This file is the short contract for humans and coding agents working in `allspar
 .\gradlew.bat check
 .\gradlew.bat spotlessApply
 .\gradlew.bat javadoc
+.\gradlew.bat japicmp
+.\gradlew.bat japicmpGate
+.\gradlew.bat updateApiBaseline
 ```
 
-`check` compiles production code, tests, the Java 11 consumer fixture, architecture tests, javadoc, and Spotless. Format with `.\gradlew.bat spotlessApply` (Palantir Java Format, 4-space).
+`check` compiles production code, tests, the Java 11 consumer fixture, architecture tests, japicmp against `api/baseline/allsparks-contracts.jar`, japicmpGate, javadoc, and Spotless. Format with `.\gradlew.bat spotlessApply` (Palantir Java Format, 4-space). After an accepted API change, refresh the baseline with `.\gradlew.bat updateApiBaseline` and commit the JAR with a migration note. See [docs/compatibility.md](docs/compatibility.md).
 
 ## Allowed contents
 

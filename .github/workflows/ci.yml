@@ -1,10 +1,11 @@
 name: CI
 
 # What each job prevents:
-#   test          — broken compile/tests, architecture regressions, consumer fixture
-#   docs-structure — missing required contributor/architecture docs
+#   test          - broken compile/tests, architecture regressions, consumer fixture,
+#                   japicmp vs api/baseline/allsparks-contracts.jar
+#   docs-structure - missing required contributor/architecture docs and API baseline
 #
-# Architecture tests run inside `./gradlew check`.
+# Architecture tests and japicmp run inside `./gradlew check`.
 # Third-party actions are pinned to full commit SHAs.
 
 permissions:
@@ -33,7 +34,7 @@ jobs:
       - name: Grant Gradle permissions
         if: runner.os != 'Windows'
         run: chmod +x gradlew
-      - name: Compile, test, javadoc, consumer fixture
+      - name: Compile, test, javadoc, consumer fixture, API compatibility
         run: ./gradlew check --no-daemon
       - name: Artifact smoke
         run: ./gradlew jar sourcesJar javadocJar --no-daemon
@@ -56,3 +57,5 @@ jobs:
           test -f docs/audits/cross-project-contract-audit.md
           test -f docs/compatibility.md
           test -f docs/adoption.md
+          test -f api/baseline/allsparks-contracts.jar
+          test -f api/baseline/README.md

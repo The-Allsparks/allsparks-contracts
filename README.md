@@ -75,7 +75,7 @@ public final class LiftReadinessExample {
 
 On Windows: `.\gradlew.bat check`.
 
-Java 11 source and target. CI uses Temurin 17. There are no production dependencies.
+Java 11 source and target. CI uses Temurin 17. There are no production dependencies. `check` includes japicmp against [`api/baseline/allsparks-contracts.jar`](api/baseline/allsparks-contracts.jar); see [Compatibility](docs/compatibility.md).
 
 ## Docs
 
