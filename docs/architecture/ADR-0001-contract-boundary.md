@@ -4,6 +4,10 @@
 - Date: 2026-09-16
 - Deciders: The Allsparks maintainers
 
+## Acceptance
+
+Maintainers accepted this ADR on 2026-09-16. The v0 public allowlist is unchanged. Lifecycle interfaces remain deferred. Closes #1.
+
 ## Context
 
 The Allsparks maintains independently adoptable FTC libraries: AMPER, ViDAR, MIMIC, TRACE, BEACON, HELM, ECHO, and SHIFT when available. RELAY does not exist. Those libraries were generated separately and now contain the same clocks, identifiers, validity, confidence, availability, readiness, reasons, and health envelopes under project prefixes.

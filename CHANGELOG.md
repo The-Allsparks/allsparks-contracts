@@ -11,3 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial experimental contracts: monotonic clock, component and capability identifiers, validity, confidence, availability, readiness, structured reasons, and health findings.
 - Cross-project audit and ADR-0001 contract boundary.
+
+### Changed
+
+- ADR-0001 accepted: v0 public allowlist is unchanged and lifecycle interfaces remain deferred.

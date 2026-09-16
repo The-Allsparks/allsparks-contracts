@@ -18,9 +18,9 @@ Rewriting AMPER, TRACE, HELM, or any other functional repository.
 
 ## Acceptance criteria
 
-- [ ] Maintainers accept ADR-0001
-- [ ] Public type allowlist remains the admitted set
-- [ ] Lifecycle interfaces stay deferred
+- [x] Maintainers accept ADR-0001
+- [x] Public type allowlist remains the admitted set
+- [x] Lifecycle interfaces stay deferred
 
 ## Hardware validation required
 
