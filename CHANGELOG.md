@@ -18,3 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - ADR-0001 accepted: v0 public allowlist is unchanged and lifecycle interfaces remain deferred.
+
+### Fixed
+
+- Quoted the Publish workflow `workflow_dispatch` version description so GitHub Actions can parse the YAML.
