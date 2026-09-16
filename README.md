@@ -16,7 +16,7 @@ A tiny JAR of immutable value types and one clock SPI:
 - `Availability` / `Readiness` / `Reason`
 - `HealthSeverity` / `HealthFinding`
 
-Maven coordinates: `org.allsparks:allsparks-contracts`. Visiting teams that want this JAR without TRACE or HELM: [Third-party use](docs/third-party.md).
+Maven coordinates: `org.allsparks:allsparks-contracts`. Visiting teams that want this JAR without TRACE or HELM: [Third-party use](docs/third-party.md). GitHub Packages hosts experimental versions (not 1.0); `includeBuild` remains the zero-auth student path.
 
 ## What this is not
 
@@ -76,6 +76,21 @@ public final class LiftReadinessExample {
 On Windows: `.\gradlew.bat check`.
 
 Java 11 source and target. CI uses Temurin 17. There are no production dependencies. `check` includes japicmp against [`api/baseline/allsparks-contracts.jar`](api/baseline/allsparks-contracts.jar); see [Compatibility](docs/compatibility.md).
+
+## Publication
+
+This is experimental, not 1.0. Maven Central is not enabled.
+
+Maintainers publish the main JAR, sources JAR, and javadoc JAR (pure Java, no FTC or Android artifacts) to GitHub Packages:
+
+```text
+git tag v0.1.0-rc.1
+git push origin v0.1.0-rc.1
+```
+
+The [Publish](.github/workflows/publish.yml) workflow also accepts `workflow_dispatch`. It does not run on every `main` push.
+
+Consumers that resolve GitHub Packages must authenticate even though the package is public (`GPR_USERNAME` / `GPR_TOKEN` or `GITHUB_ACTOR` / `GITHUB_TOKEN`). Students without a PAT should keep using Gradle `includeBuild('../allsparks-contracts')`. Snippets: [Compatibility](docs/compatibility.md), [Third-party use](docs/third-party.md).
 
 ## Docs
 
