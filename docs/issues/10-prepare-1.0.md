@@ -18,8 +18,10 @@ Declaring 1.0 in this issue.
 
 ## Acceptance criteria
 
-- [ ] Written 1.0 checklist in docs/compatibility.md
-- [ ] TRACE and HELM pilots completed or explicitly waived
+- [x] Written 1.0 checklist in docs/compatibility.md
+- [x] TRACE and HELM pilots completed or explicitly waived
+
+TRACE: [TRACE PR #42](https://github.com/The-Allsparks/TRACE/pull/42). HELM: [HELM PR #48](https://github.com/The-Allsparks/HELM/pull/48). Both consume `0.1.0-rc.1` or SNAPSHOT and are not themselves 1.0. Writing the checklist does not declare contracts 1.0.
 
 ## Hardware validation required
 

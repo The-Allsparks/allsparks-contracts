@@ -2,7 +2,7 @@
 
 `allsparks-contracts` uses [Semantic Versioning](https://semver.org/). Maven coordinates: `org.allsparks:allsparks-contracts`.
 
-The project is experimental until TRACE and HELM validate the contracts. Version `0.1.0-SNAPSHOT` is not a stability promise.
+The project is experimental. Version `0.1.0-SNAPSHOT` and published `0.1.0-rc.1` are not a stability promise. TRACE and HELM first-pilot mappings exist; that does not declare 1.0. See the [1.0 stability checklist](#10-stability-checklist).
 
 ## Java
 
@@ -22,6 +22,20 @@ Source and target **11**. CI uses Temurin 17. AMPER and SHIFT currently compile 
 - Serialized identifiers (`ComponentId`, `CapabilityId`, `Reason` codes) must remain stable.
 - Equality and hash semantics must not change in a minor release.
 - Clock and timestamp semantics must not change silently. `nowNanos()` must not be redefined as UTC, wall-clock, or camera capture time.
+
+## 1.0 stability checklist
+
+This section is the bar for a future 1.0. Writing it, checking boxes, or merging this document **does not ship 1.0**. Maintainers declare 1.0 only with an explicit version bump, CHANGELOG release section, and Git tag. Until that happens, a version is still allowed to rename a public type (avoided when possible; documented when not).
+
+Necessary conditions (all must hold before maintainers may declare 1.0):
+
+- [x] **Two consuming libraries released against contracts.** TRACE first-pilot mapping merged ([TRACE PR #42](https://github.com/The-Allsparks/TRACE/pull/42)). HELM first-pilot mapping merged ([HELM PR #48](https://github.com/The-Allsparks/HELM/pull/48)). Both currently depend on `org.allsparks:allsparks-contracts:0.1.0-rc.1` (or `0.1.0-SNAPSHOT` via `includeBuild`). TRACE and HELM themselves are not 1.0. Their pilots do not make this artifact 1.0.
+- [x] **Compatibility tests remain required CI.** `./gradlew check` runs japicmp against `api/baseline/allsparks-contracts.jar` and `japicmpGate` fails on any public API modification, including new enum constants. See [API compatibility check](#api-compatibility-check).
+- [x] **No pending surprise lifecycle share.** After the two pilots, [ADR-0002](architecture/ADR-0002-lifecycle-deferred.md) keeps `start` / `stop` / `close` / `periodic` / `attach` deferred. A later share would need a new ADR and an explicit public-API change, not a silent 1.0 surprise.
+- [x] **Documented enum mapping.** Adapter leftover constants are in [Enum mapping](#enum-mapping).
+- [x] **Publication in place.** GitHub Packages publishes `org.allsparks:allsparks-contracts` (see [Publication](#publication)). Maven Central is optional and is **not** required to write this bar.
+
+Meeting every row still requires a separate maintainer release to become 1.0. This checklist does not change the public Java API and does not publish a 1.0 artifact.
 
 ## Enum mapping
 

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - TRACE and HELM first-pilot mappings are recorded in [adoption.md](docs/adoption.md). TRACE: clock, quality, and severity mapped at the TRACE edge without deleting local types ([TRACE PR #42](https://github.com/The-Allsparks/TRACE/pull/42)). HELM: clock, capability id, availability (`STALE` via freshness), and confidence mapped at the HELM edge without deleting local types ([HELM PR #48](https://github.com/The-Allsparks/HELM/pull/48)). Physical output remains disabled. No Java API change.
 - After TRACE and HELM consumed contracts, lifecycle comparison versus MIMIC `periodic`/`stop` (with ViDAR camera attach as extra evidence) fails the admission rule. [ADR-0002](docs/architecture/ADR-0002-lifecycle-deferred.md) keeps start/stop/close/periodic/attach interfaces deferred. No Java API change.
+- 1.0 stability checklist in [compatibility.md](docs/compatibility.md): two consuming libraries (TRACE PR #42, HELM PR #48, still on `0.1.0-rc.1` / SNAPSHOT and not themselves 1.0), japicmpGate required CI, lifecycle remains deferred (ADR-0002), documented enum mapping, GitHub Packages publication (Maven Central optional). Writing the checklist does not declare or publish 1.0. No Java API change.
 
 ### Fixed
 
