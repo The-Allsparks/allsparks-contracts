@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - ADR-0001 accepted: v0 public allowlist is unchanged and lifecycle interfaces remain deferred.
 
+### Documentation
+
+- TRACE first-pilot mapping is recorded in [adoption.md](docs/adoption.md): clock, quality, and severity mapped at the TRACE edge without deleting local types ([TRACE PR #42](https://github.com/The-Allsparks/TRACE/pull/42)). No Java API change.
+
 ### Fixed
 
 - Quoted the Publish workflow `workflow_dispatch` version description so GitHub Actions can parse the YAML.

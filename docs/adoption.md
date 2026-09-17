@@ -54,13 +54,15 @@ Do not begin with ViDAR timing or measurement-validity deletion. Capture time is
 
 ### TRACE
 
-TRACE already consumes component identity and structured findings. Map:
+Pilot merged in [TRACE PR #42](https://github.com/The-Allsparks/TRACE/pull/42). TRACE depends on `org.allsparks:allsparks-contracts:0.1.0-rc.1` and remains independently adoptable (no HELM, AMPER, or MIMIC compile dependency).
 
-- `TraceClock.nanoTime()` to `MonotonicClock.nowNanos()`
-- `TraceQuality` OK/STALE/INVALID/MISSING to `Validity`
-- `TraceSeverity` to `HealthSeverity`
+Mapped without deleting TRACE-local types:
 
-Keep `TraceClock.wallClockMillis()` inside TRACE. Do not delete `TraceRecord` in the first PR.
+- `TraceClock` extends `MonotonicClock` (`nowNanos()` delegates to `nanoTime()`)
+- `TraceQuality` OK/STALE/INVALID/MISSING to `Validity`; `ESTIMATED` and `ASYNC` stay TRACE recording labels
+- `TraceSeverity` INFO/NOTICE → `HealthSeverity.INFO`, WARNING → WARNING, ERROR → DEGRADED, FAULT → STOP_COMPONENT
+
+`TraceClock.wallClockMillis()` stays inside TRACE. `TraceRecord` was not deleted.
 
 ### HELM
 
