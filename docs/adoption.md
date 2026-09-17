@@ -79,7 +79,7 @@ Mapped without deleting HELM-local types:
 
 ### First adapter after the pilots
 
-A TRACE or HELM edge adapter plus one producer (BEACON or MIMIC) once the two pilots compile independently.
+Shipped as [`trace-mimic-adapter`](https://github.com/The-Allsparks/trace-mimic-adapter) ([PR #1](https://github.com/The-Allsparks/trace-mimic-adapter/pull/1), merge `87f890e`). It maps MIMIC `MimicEvent` onto TRACE `TraceSession.event`. TRACE and MIMIC still build independently. Installing the adapter does not move motors. This repository's Java API is unchanged.
 
 ## Optional version catalog
 
