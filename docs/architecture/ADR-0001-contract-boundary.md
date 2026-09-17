@@ -60,7 +60,7 @@ Those map into the envelopes. They are not copied here.
 
 ## 5. Are lifecycle interfaces identical?
 
-No. `initialize` / `periodic` / `tick` / `attachVision` / `stop` / `close` / `mute` are different operations. `AutoCloseable.close()` is not emergency stop. `stop()` sometimes implies actuator authority and sometimes does not. Shared lifecycle contracts are deferred until two consumers exist (issue: evaluate lifecycle after two consumers).
+No. `initialize` / `periodic` / `tick` / `attachVision` / `stop` / `close` / `mute` are different operations. `AutoCloseable.close()` is not emergency stop. `stop()` sometimes implies actuator authority and sometimes does not. After TRACE and HELM consumed contracts, the comparison still fails the admission rule. Shared lifecycle contracts remain deferred. See [ADR-0002](ADR-0002-lifecycle-deferred.md).
 
 ## 6. What timestamps represent
 
@@ -132,4 +132,4 @@ Widening the project's responsibility requires a new ADR.
 
 - TRACE and HELM are the first adoption pilots. They add a dependency without deleting local types in the first PR.
 - AMPER and SHIFT target Java 8 today (drift). They adopt Java 11 when they consume this JAR.
-- Lifecycle, capture time, and domain payloads stay out of v0 even though the words overlap.
+- Lifecycle, capture time, and domain payloads stay out of v0 even though the words overlap. After TRACE and HELM adopted the JAR, [ADR-0002](ADR-0002-lifecycle-deferred.md) confirmed that lifecycle interfaces still fail admission.

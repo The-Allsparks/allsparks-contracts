@@ -81,6 +81,10 @@ Mapped without deleting HELM-local types:
 
 Shipped as [`trace-mimic-adapter`](https://github.com/The-Allsparks/trace-mimic-adapter) ([PR #1](https://github.com/The-Allsparks/trace-mimic-adapter/pull/1), merge `87f890e`). It maps MIMIC `MimicEvent` onto TRACE `TraceSession.event`. TRACE and MIMIC still build independently. Installing the adapter does not move motors. This repository's Java API is unchanged.
 
+## Lifecycle after two consumers
+
+TRACE `TraceCycle` (`AutoCloseable`) and HELM `ActionAdapter.tick` / `cancel` are not the same operation as MIMIC `periodic` / `stop`. ViDAR `attachVision` / `detachVision` is extra evidence: releasing a camera portal is not a mechanism session stop. The admission rule fails, so lifecycle interfaces stay out of this JAR. See [ADR-0002](architecture/ADR-0002-lifecycle-deferred.md).
+
 ## Optional version catalog
 
 Teams that opt into more than one library can pin versions from
