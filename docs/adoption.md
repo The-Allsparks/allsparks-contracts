@@ -66,14 +66,16 @@ Mapped without deleting TRACE-local types:
 
 ### HELM
 
-HELM already consumes capability identity, availability, confidence, and readiness-shaped eligibility. Map:
+Pilot merged in [HELM PR #48](https://github.com/The-Allsparks/HELM/pull/48). HELM depends on `org.allsparks:allsparks-contracts:0.1.0-rc.1` and remains independently adoptable (no TRACE, AMPER, or MIMIC compile dependency).
 
-- `HelmClock` to `MonotonicClock`
-- `Capability` to `CapabilityId` (keep HELM well-known constants in HELM)
-- `CapabilityAvailability` to `Availability` (map `STALE` via freshness, not a fifth availability value)
-- `Confidence` to the shared type
+Mapped without deleting HELM-local types:
 
-Do not enable physical output as part of adoption.
+- `HelmClock` extends `MonotonicClock` (`nowNanos()` delegates to `nanoTime()`)
+- `Capability` to `CapabilityId` (well-known constants stay in HELM; students use `Capability.named` without editing this repository)
+- `CapabilityAvailability` AVAILABLE/DEGRADED/UNAVAILABLE/UNKNOWN to `Availability` of the same names; `STALE` maps to `Validity.STALE` (freshness), not a fifth availability value
+- HELM `Confidence` unknown/of([0, 1]) round-trips to the shared type
+
+`AuthorityGate.allowsPhysicalOutput()` stays false. HELM `Confidence` was not deleted.
 
 ### First adapter after the pilots
 
