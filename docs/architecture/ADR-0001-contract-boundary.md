@@ -72,7 +72,7 @@ TRACE wall-clock milliseconds, ViDAR `captureTimeNanos`, and SHIFT gamepad milli
 
 ## 7. How version conflicts are avoided
 
-Semantic versioning. One artifact coordinate: `org.allsparks:allsparks-contracts`. Consumers depend on it directly. Functional libraries must not shade or relocate it. A future BOM may align optional stack versions; that is not this repository's runtime.
+Semantic versioning. One artifact coordinate: `org.allsparks:allsparks-contracts`. Consumers depend on it directly. Functional libraries must not shade or relocate it. An optional Gradle version catalog may align TeamCode stack versions; that is not this repository's runtime and does not create compile-time edges between functional libraries. See [version-catalog.md](../version-catalog.md).
 
 Before 1.0, avoid unnecessary breaks and document migrations. After 1.0, removals and semantic changes require a major version. Adding enum constants is a compatibility event because consumers may switch exhaustively.
 

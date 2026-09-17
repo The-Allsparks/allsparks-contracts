@@ -81,6 +81,15 @@ Mapped without deleting HELM-local types:
 
 A TRACE or HELM edge adapter plus one producer (BEACON or MIMIC) once the two pilots compile independently.
 
+## Optional version catalog
+
+Teams that opt into more than one library can pin versions from
+[`gradle/allsparks-stack.versions.toml`](../gradle/allsparks-stack.versions.toml)
+so TRACE and HELM resolve the same `allsparks-contracts` release. The catalog
+is optional. This repository's build does not apply it. It does not create
+compile-time edges between functional libraries. `includeBuild` still works.
+See [Version catalog](version-catalog.md).
+
 ## Java 11
 
 Consumers compile as Java 11. AMPER and SHIFT should bump to Java 11 when they adopt. Do not fork a Java 8 contracts line.

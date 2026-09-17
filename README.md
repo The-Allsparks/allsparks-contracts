@@ -98,6 +98,7 @@ Consumers that resolve GitHub Packages must authenticate even though the package
 - [Cross-project audit](docs/audits/cross-project-contract-audit.md)
 - [Compatibility](docs/compatibility.md)
 - [Adoption](docs/adoption.md)
+- [Version catalog](docs/version-catalog.md)
 - [Third-party use](docs/third-party.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)

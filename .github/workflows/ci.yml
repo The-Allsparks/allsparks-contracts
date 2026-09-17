@@ -3,7 +3,8 @@ name: CI
 # What each job prevents:
 #   test          - broken compile/tests, architecture regressions, consumer fixture,
 #                   japicmp vs api/baseline/allsparks-contracts.jar
-#   docs-structure - missing required contributor/architecture docs and API baseline
+#   docs-structure - missing required contributor/architecture docs, API baseline,
+#                    and optional catalog files; catalog must not be applied here
 #
 # Architecture tests and japicmp run inside `./gradlew check`.
 # Third-party actions are pinned to full commit SHAs.
@@ -58,5 +59,25 @@ jobs:
           test -f docs/compatibility.md
           test -f docs/adoption.md
           test -f docs/third-party.md
+          test -f docs/version-catalog.md
+          test -f gradle/allsparks-stack.versions.toml
           test -f api/baseline/allsparks-contracts.jar
           test -f api/baseline/README.md
+      - name: Optional catalog is not applied by this build
+        run: |
+          set -e
+          grep -q 'org.allsparks' gradle/allsparks-stack.versions.toml
+          grep -q '0.1.0-rc.1' gradle/allsparks-stack.versions.toml
+          grep -q '0.1.0-SNAPSHOT' gradle/allsparks-stack.versions.toml
+          if grep -q 'versionCatalogs' settings.gradle; then
+            echo 'settings.gradle must not register the optional catalog' >&2
+            exit 1
+          fi
+          if grep -E 'java-platform|allsparks-bom' build.gradle; then
+            echo 'do not add a mandatory BOM or stack meta-package' >&2
+            exit 1
+          fi
+          if grep -q '\[bundles\]' gradle/allsparks-stack.versions.toml; then
+            echo 'do not add a catalog bundle that pulls multiple functional libraries' >&2
+            exit 1
+          fi

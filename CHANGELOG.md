@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - japicmp check against `api/baseline/allsparks-contracts.jar`. Binary or source incompatibilities, including new enum constants, fail `./gradlew check` until the baseline is refreshed with a documented migration.
 - Third-party use guide: coordinates, Java 11 with no FTC or Android dependency, leftover enum mapping, custom `CapabilityId` values, and where to file issues.
 - GitHub Packages publication for `org.allsparks:allsparks-contracts` (main, sources, and javadoc JARs; MIT POM; no FTC or Android artifacts). Maintainers publish with tag `v0.1.0-rc.1` or Actions `workflow_dispatch`. Consumers authenticate even for public packages; `includeBuild` remains the zero-auth student path. Experimental, not 1.0. Maven Central is not enabled.
+- Optional Gradle version catalog at `gradle/allsparks-stack.versions.toml` pinning `org.allsparks:allsparks-contracts:0.1.0-rc.1` and recording unpublished TRACE/HELM `0.1.0-SNAPSHOT` includeBuild notes. This build does not apply the catalog. It is not a BOM or a meta-package. See [version-catalog.md](docs/version-catalog.md).
 
 ### Changed
 

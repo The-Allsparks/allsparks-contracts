@@ -1,1 +1,5 @@
 rootProject.name = 'allsparks-contracts'
+
+// Optional TeamCode catalog: gradle/allsparks-stack.versions.toml
+// This build does not register it. Consumers opt in from their settings.gradle.
+// See docs/version-catalog.md.
