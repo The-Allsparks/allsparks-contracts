@@ -1,0 +1,23 @@
+# Optional Allsparks stack version catalog.
+#
+# Copy-paste for TeamCode. This repository's Gradle build does not apply the
+# file. Functional libraries still build independently without it. There is
+# no bundle that pulls AMPER + TRACE + HELM; selecting one alias does not
+# create a compile-time edge to another library.
+#
+# How to opt in: docs/version-catalog.md
+
+[versions]
+# Published GitHub Packages coordinate. Not on Maven Central.
+contracts = "0.1.0-rc.1"
+# Unpublished SNAPSHOT notes for sibling includeBuild substitutions.
+# These are not Maven Central coordinates. Do not resolve them remotely.
+trace = "0.1.0-SNAPSHOT"
+helm = "0.1.0-SNAPSHOT"
+
+[libraries]
+contracts = { group = "org.allsparks", name = "allsparks-contracts", version.ref = "contracts" }
+# Local includeBuild module names (org.allsparks:trace, org.allsparks:helm).
+# Not published to Maven Central or GitHub Packages.
+trace = { group = "org.allsparks", name = "trace", version.ref = "trace" }
+helm = { group = "org.allsparks", name = "helm", version.ref = "helm" }

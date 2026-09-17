@@ -18,8 +18,8 @@ A mandatory meta-package that pulls AMPER+TRACE+HELM.
 
 ## Acceptance criteria
 
-- [ ] Documented optional catalog or BOM
-- [ ] Functional libraries still build without it
+- [x] Documented optional catalog or BOM
+- [x] Functional libraries still build without it
 
 ## Hardware validation required
 
