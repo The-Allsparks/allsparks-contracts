@@ -4,7 +4,7 @@
 
 This is not a robot framework. Installing it does nothing by itself. It does not control hardware. It does not replace the FTC SDK. It does not require adoption of the Allsparks stack. Functional libraries remain independently adoptable. Domain-specific state remains owned by the domain project. Optional adapters perform cross-project translation.
 
-The project is experimental until its initial consumers (TRACE, then HELM) validate the contracts.
+The project is experimental. TRACE and HELM first-pilot mappings exist. That is not a 1.0 declaration. The bar to declare 1.0 is the checklist in [Compatibility](docs/compatibility.md).
 
 ## What this is
 
@@ -97,7 +97,7 @@ Consumers that resolve GitHub Packages must authenticate even though the package
 - [Architecture decision](docs/architecture/ADR-0001-contract-boundary.md)
 - [Lifecycle deferred](docs/architecture/ADR-0002-lifecycle-deferred.md)
 - [Cross-project audit](docs/audits/cross-project-contract-audit.md)
-- [Compatibility](docs/compatibility.md)
+- [Compatibility](docs/compatibility.md) (includes the 1.0 stability checklist; writing it does not ship 1.0)
 - [Adoption](docs/adoption.md)
 - [Version catalog](docs/version-catalog.md)
 - [Third-party use](docs/third-party.md)
