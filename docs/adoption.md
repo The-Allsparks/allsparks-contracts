@@ -54,24 +54,28 @@ Do not begin with ViDAR timing or measurement-validity deletion. Capture time is
 
 ### TRACE
 
-TRACE already consumes component identity and structured findings. Map:
+Pilot merged in [TRACE PR #42](https://github.com/The-Allsparks/TRACE/pull/42). TRACE depends on `org.allsparks:allsparks-contracts:0.1.0-rc.1` and remains independently adoptable (no HELM, AMPER, or MIMIC compile dependency).
 
-- `TraceClock.nanoTime()` to `MonotonicClock.nowNanos()`
-- `TraceQuality` OK/STALE/INVALID/MISSING to `Validity`
-- `TraceSeverity` to `HealthSeverity`
+Mapped without deleting TRACE-local types:
 
-Keep `TraceClock.wallClockMillis()` inside TRACE. Do not delete `TraceRecord` in the first PR.
+- `TraceClock` extends `MonotonicClock` (`nowNanos()` delegates to `nanoTime()`)
+- `TraceQuality` OK/STALE/INVALID/MISSING to `Validity`; `ESTIMATED` and `ASYNC` stay TRACE recording labels
+- `TraceSeverity` INFO/NOTICE → `HealthSeverity.INFO`, WARNING → WARNING, ERROR → DEGRADED, FAULT → STOP_COMPONENT
+
+`TraceClock.wallClockMillis()` stays inside TRACE. `TraceRecord` was not deleted.
 
 ### HELM
 
-HELM already consumes capability identity, availability, confidence, and readiness-shaped eligibility. Map:
+Pilot merged in [HELM PR #48](https://github.com/The-Allsparks/HELM/pull/48). HELM depends on `org.allsparks:allsparks-contracts:0.1.0-rc.1` and remains independently adoptable (no TRACE, AMPER, or MIMIC compile dependency).
 
-- `HelmClock` to `MonotonicClock`
-- `Capability` to `CapabilityId` (keep HELM well-known constants in HELM)
-- `CapabilityAvailability` to `Availability` (map `STALE` via freshness, not a fifth availability value)
-- `Confidence` to the shared type
+Mapped without deleting HELM-local types:
 
-Do not enable physical output as part of adoption.
+- `HelmClock` extends `MonotonicClock` (`nowNanos()` delegates to `nanoTime()`)
+- `Capability` to `CapabilityId` (well-known constants stay in HELM; students use `Capability.named` without editing this repository)
+- `CapabilityAvailability` AVAILABLE/DEGRADED/UNAVAILABLE/UNKNOWN to `Availability` of the same names; `STALE` maps to `Validity.STALE` (freshness), not a fifth availability value
+- HELM `Confidence` unknown/of([0, 1]) round-trips to the shared type
+
+`AuthorityGate.allowsPhysicalOutput()` stays false. HELM `Confidence` was not deleted.
 
 ### First adapter after the pilots
 
