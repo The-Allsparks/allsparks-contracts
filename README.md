@@ -95,6 +95,7 @@ Consumers that resolve GitHub Packages must authenticate even though the package
 ## Docs
 
 - [Architecture decision](docs/architecture/ADR-0001-contract-boundary.md)
+- [Lifecycle deferred](docs/architecture/ADR-0002-lifecycle-deferred.md)
 - [Cross-project audit](docs/audits/cross-project-contract-audit.md)
 - [Compatibility](docs/compatibility.md)
 - [Adoption](docs/adoption.md)
