@@ -315,8 +315,10 @@ No shared `Timestamp` wrapper in v0. Mixing camera capture time with `nowNanos()
 | Reason envelope | Yes | Yes as envelope | Yes |
 | HealthSeverity | TRACE + HELM + MIMIC docs | Yes as recommended impact | Yes |
 | HealthFinding | TRACE + HELM + BEACON | Yes as envelope | Yes |
+| Input sampling declarations | PULSE + MIMIC/AMPER/Pedro/HELM/TRACE/ViDAR declaration SPI | Yes as envelopes; AMPER/TRACE local SamplingPolicy stay domain-specific | Yes (ADR-0003) |
 | Lifecycle interfaces | Many names, different operations | No | Defer |
 | LinkHealth / PowerGrant / snapshots | Domain payloads | No | No |
+| Sampling runtime / Hub cache / capture loop | PULSE | Runtime authority | No |
 
 ## First consumers (not in this repository)
 

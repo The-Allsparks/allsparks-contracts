@@ -22,7 +22,10 @@ class PackageBoundaryTest {
             "org.allsparks.trace",
             "org.allsparks.beacon",
             "org.allsparks.helm",
-            "org.allsparks.echo");
+            "org.allsparks.echo",
+            "org.allsparks.pulse",
+            "org.allsparks.shift",
+            "org.allsparks.forge");
 
     @Test
     void productionSourcesDoNotImportForbiddenPackages() throws IOException {

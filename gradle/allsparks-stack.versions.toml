@@ -14,6 +14,7 @@ contracts = "0.1.0-rc.1"
 # These are not Maven Central coordinates. Do not resolve them remotely.
 trace = "0.1.0-SNAPSHOT"
 helm = "0.1.0-SNAPSHOT"
+pulse = "0.1.0-SNAPSHOT"
 
 [libraries]
 contracts = { group = "org.allsparks", name = "allsparks-contracts", version.ref = "contracts" }
@@ -21,3 +22,4 @@ contracts = { group = "org.allsparks", name = "allsparks-contracts", version.ref
 # Not published to Maven Central or GitHub Packages.
 trace = { group = "org.allsparks", name = "trace", version.ref = "trace" }
 helm = { group = "org.allsparks", name = "helm", version.ref = "helm" }
+pulse-core = { group = "org.allsparks", name = "pulse-core", version.ref = "pulse" }

@@ -15,6 +15,7 @@ A tiny JAR of immutable value types and one clock SPI:
 - `Validity` / `Confidence`
 - `Availability` / `Readiness` / `Reason`
 - `HealthSeverity` / `HealthFinding`
+- Input declarations: `SignalKey` / `SamplingPolicy` / `Sample` / `InputRegistrar` (not a scheduler; see [ADR-0003](docs/architecture/ADR-0003-input-sampling-spi.md))
 
 Maven coordinates: `org.allsparks:allsparks-contracts`. Visiting teams that want this JAR without TRACE or HELM: [Third-party use](docs/third-party.md). GitHub Packages hosts experimental versions (not 1.0); `includeBuild` remains the zero-auth student path.
 

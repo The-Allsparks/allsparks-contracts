@@ -50,6 +50,10 @@ MIMIC -> AMPER
 
 Do not begin with ViDAR timing or measurement-validity deletion. Capture time is not process monotonic time.
 
+## Input sampling declarations
+
+[ADR-0003](architecture/ADR-0003-input-sampling-spi.md) admits `org.allsparks.contracts.input` so MIMIC, AMPER, Pedro, HELM, TRACE, and ViDAR can declare `SignalKey` requirements without a compile dependency on PULSE. PULSE implements `InputRegistrar` and `InputValues`. Local AMPER/TRACE `SamplingPolicy` types keep their domain meanings (current-read budget; recorder change threshold). Do not make those libraries depend on `org.allsparks.pulse`.
+
 ## First pilots
 
 ### TRACE

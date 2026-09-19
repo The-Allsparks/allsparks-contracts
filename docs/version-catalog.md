@@ -19,6 +19,7 @@ pulls AMPER + TRACE + HELM.
 | `contracts` | `org.allsparks:allsparks-contracts:0.1.0-rc.1` | Published on GitHub Packages (not Maven Central) |
 | `trace` | `org.allsparks:trace:0.1.0-SNAPSHOT` | Unpublished SNAPSHOT note for `includeBuild` |
 | `helm` | `org.allsparks:helm:0.1.0-SNAPSHOT` | Unpublished SNAPSHOT note for `includeBuild` |
+| `pulse-core` | `org.allsparks:pulse-core:0.1.0-SNAPSHOT` | Unpublished SNAPSHOT note for `includeBuild` |
 
 TRACE and HELM are not published to Maven Central. Do not invent remote
 coordinates for them. Use a sibling checkout and `includeBuild`, the same way

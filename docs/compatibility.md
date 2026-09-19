@@ -14,6 +14,7 @@ Source and target **11**. CI uses Temurin 17. AMPER and SHIFT currently compile 
 - Mark experimental APIs in Javadoc.
 - Do not remove a public type without migration documentation.
 - Require an ADR to widen the project's responsibility (runtime, hardware, FTC, lifecycle ownership).
+- Input sampling *declarations* (`SignalKey`, `SamplingPolicy`, `InputRegistrar`) are admitted by [ADR-0003](architecture/ADR-0003-input-sampling-spi.md). A sampling runtime, Hub bulk cache, or `capture()` loop still requires a functional project such as PULSE, not this JAR.
 
 ## At and after 1.0
 

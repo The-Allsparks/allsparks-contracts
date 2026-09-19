@@ -26,6 +26,7 @@ This file is the short contract for humans and coding agents working in `allspar
 | Stateless `SystemMonotonicClock` | Global mutable clock, service registry, feature flags |
 | Instance `FakeMonotonicClock` | Background threads, scheduler, event bus |
 | IDs, validity, confidence, status, health envelopes | Hardware authority, recovery engine, OpMode lifecycle |
+| Input declaration envelopes (`SignalKey`, `SamplingPolicy`, `Sample`, `InputRegistrar`, `InputDemand`, `InputValues`) | Sampling runtime, compiled read plan, Hub cache, `capture` loop |
 | Tests and consumer fixtures | Untyped string maps, Java records, season constants |
 
 Architecture tests enforce forbidden imports and the public type allowlist.

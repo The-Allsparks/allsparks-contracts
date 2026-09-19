@@ -28,7 +28,19 @@ class PublicApiSurfaceTest {
             "org.allsparks.contracts.status.Readiness.State",
             "org.allsparks.contracts.status.Reason",
             "org.allsparks.contracts.health.HealthSeverity",
-            "org.allsparks.contracts.health.HealthFinding"));
+            "org.allsparks.contracts.health.HealthFinding",
+            "org.allsparks.contracts.input.SignalValueType",
+            "org.allsparks.contracts.input.SignalKey",
+            "org.allsparks.contracts.input.SamplingPolicy",
+            "org.allsparks.contracts.input.InputPriority",
+            "org.allsparks.contracts.input.Sample",
+            "org.allsparks.contracts.input.InputRequirement",
+            "org.allsparks.contracts.input.CoherentGroup",
+            "org.allsparks.contracts.input.InputRequirements",
+            "org.allsparks.contracts.input.InputValues",
+            "org.allsparks.contracts.input.InputRegistrar",
+            "org.allsparks.contracts.input.InputDemand",
+            "org.allsparks.contracts.input.MotorSignals"));
 
     private static final Pattern TYPE = Pattern.compile("public\\s+(?:final\\s+)?(?:class|interface|enum)\\s+(\\w+)");
 

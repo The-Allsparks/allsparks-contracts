@@ -126,7 +126,7 @@ A concept may enter this artifact only when all are true:
 7. It does not force one functional Allsparks project to depend on another.
 8. It does not introduce runtime authority (threads, schedulers, hardware, OpMode ownership, recovery).
 
-Widening the project's responsibility requires a new ADR.
+Widening the project's responsibility requires a new ADR. Input sampling *declarations* were admitted in [ADR-0003](ADR-0003-input-sampling-spi.md). A sampling runtime is still out of scope.
 
 ## Consequences
 

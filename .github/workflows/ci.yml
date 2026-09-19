@@ -56,6 +56,7 @@ jobs:
           test -f CHANGELOG.md
           test -f docs/architecture/ADR-0001-contract-boundary.md
           test -f docs/architecture/ADR-0002-lifecycle-deferred.md
+          test -f docs/architecture/ADR-0003-input-sampling-spi.md
           test -f docs/audits/cross-project-contract-audit.md
           test -f docs/compatibility.md
           test -f docs/adoption.md
